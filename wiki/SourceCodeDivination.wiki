@@ -14,8 +14,8 @@ The following rules are currently used to convert behaviors into server-side pse
 <TD>Input reflected in output (direct)</TD>
 <TD><U>JSP</U><BR/><FONT size="2">Source Page</FONT>
 
-<TABLE bgcolor="#00FFFF">
-<TR><TD>
+<TABLE>
+<TR bgcolor="#1AC6FF"><TD>
 <FONT size="2">
 String input{id} = request.getParameter("{id}");
 ...
