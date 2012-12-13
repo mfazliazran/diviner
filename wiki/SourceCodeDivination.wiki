@@ -3,4 +3,12 @@ One of these methods is conversion into a source code representation of the appl
 
 The following rules are currently used to convert behaviors into server-side pseudo code:
 
+<TABLE>
+<TR>
+<TD><B>Plugin</B></TD>
+<TD><B>Behavior</B></TD>
+<TD><B>Code</B></TD>
+</TR>
+</TABLE>
+
 <TBD>
