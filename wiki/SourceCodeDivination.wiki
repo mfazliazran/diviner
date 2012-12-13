@@ -15,11 +15,13 @@ The following rules are currently used to convert behaviors into server-side pse
 <TD><U>JSP</U><BR/><FONT size="2">Source Page</FONT>
 
 <TABLE border="1" cellspacing="0">
-<TR bgcolor="#1AC6FF"><TD bgcolor="#1AC6FF">
+<TR><TD>
 <FONT size="2">
+<TEXTAREA>
 String input{id} = request.getParameter("{id}");<BR/>
 ...<BR/>
 out.println (input{id});
+</TEXTAREA>
 </FONT>
 </TD></TR>
 </TABLE>
