@@ -17,8 +17,8 @@ The following rules are currently used to convert behaviors into server-side pse
 <TABLE border="1" cellspacing="0">
 <TR bgcolor="#1AC6FF"><TD bgcolor="#1AC6FF">
 <FONT size="2">
-String input{id} = request.getParameter("{id}");
-...
+String input{id} = request.getParameter("{id}");<BR/>
+...<BR/>
 out.println (input{id});
 </FONT>
 </TD></TR>
