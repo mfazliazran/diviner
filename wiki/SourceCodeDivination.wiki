@@ -1,0 +1,6 @@
+Diviner can represent application behaviors in different methods; 
+One of these methods is conversion into a source code representation of the application logic and behaviors.
+
+The following rules are currently used to convert behaviors into server-side pseudo code:
+
+<TBD>
