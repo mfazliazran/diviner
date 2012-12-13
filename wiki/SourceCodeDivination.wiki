@@ -9,6 +9,11 @@ The following rules are currently used to convert behaviors into server-side pse
 <TD><B>Behavior</B></TD>
 <TD><B>Code</B></TD>
 </TR>
+<TR>
+<TD>Output / Reflection</TD>
+<TD>Input reflected in output (direct)</TD>
+<TD>JSP</TD>
+</TR>
 </TABLE>
 
 <TBD>
