@@ -17,11 +17,11 @@ The following rules are currently used to convert behaviors into server-side pse
 <TABLE border="1" cellspacing="0">
 <TR><TD>
 <FONT size="2">
-<TEXTAREA>
+<
 String input{id} = request.getParameter("{id}");<BR/>
 ...<BR/>
 out.println (input{id});
-</TEXTAREA>
+>
 </FONT>
 </TD></TR>
 </TABLE>
