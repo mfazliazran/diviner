@@ -12,7 +12,7 @@ The following rules are currently used to convert behaviors into server-side pse
 <TR>
 <TD>Output / Reflection</TD>
 <TD>Input reflected in output (direct)</TD>
-<TD><U>JSP</U><BR>Source Page</TD>
+<TD><U>JSP</U><BR/>Source Page</TD>
 </TR>
 </TABLE>
 
