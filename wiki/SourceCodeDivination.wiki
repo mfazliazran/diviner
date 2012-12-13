@@ -10,8 +10,8 @@ The following rules are currently used to convert behaviors into server-side pse
 <TD><B>Code</B></TD>
 </TR>
 <TR>
-<TD>Output / Reflection</TD>
-<TD>Input reflected in output (direct)</TD>
+<TD valign="top">Output / Reflection</TD>
+<TD valign="top">Input reflected in output (direct)</TD>
 <TD><U>JSP</U><BR/><FONT size="2">Source Page</FONT>
 
 <TABLE border="1" cellspacing="0">
