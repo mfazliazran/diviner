@@ -185,7 +185,13 @@
 		<xmlproperty file="${src}/org/zaproxy/zap/extension/${addon}/ZapAddOn.xml" />
 		<property name="file" value="${addon}-${status}-${zapaddon.version}.zap" />
 		<jar jarfile="${dist}/${file}" update="true" compress="true">
-			<zipfileset dir="${src}/payload-db"
+			<zipfileset dir="${src}" prefix="">
+				<include name="com/hacktics/diviner/resource/**" />
+			</zipfileset>
+			<zipfileset dir="${src}" prefix="">
+				<include name="com/hacktics/diviner/gui/resource/**"  />
+			</zipfileset>
+			<zipfileset dir="${src}/com/hacktics/diviner/resource/injectionpayloads/"
 				prefix="payload-db" />
 			<zipfileset dir="${build}" prefix="">
 				<include name="com/hacktics/**" />

@@ -22,7 +22,7 @@ public class LicensePanel extends JPanel {
 
 
 	private static final long serialVersionUID = 1L;
-	private static final String VERSION = "Version: " + "0.1 ALPHA";
+	private static final String VERSION = "Version: " + "1.5.3 Beta";
 	
 	private static final String LICENSE = "<html><body><h1><p>Software License</p></h1>"
 			+ "<p><strong>Diviner</strong></p>"

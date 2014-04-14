@@ -1,13 +1,13 @@
 <zapaddon>
-	<name>Diviner - XXXXXXXXXXXXXXXXx</name>
+	<name>Diviner - Web Penetration Tool</name>
 	<version>15</version>
-	<description>XXXXXXXXXXXXXX</description>
+	<description>Diviner is an active information gathering platform aimed to enhance the tester's decision making process.</description>
 	<author>Hacktics ASC</author>
 	<url>https://code.google.com/p/diviner/</url>
 	<changes>Fixed Diff Plugin</changes>
 	<dependson />
 	<extensions>
-		<extension>org.zaproxy.zap.extension.diviner</extension>
+		<extension>org.zaproxy.zap.extension.diviner.DivinerExtension</extension>
 	</extensions>
 	<ascanrules />
 	<pscanrules />
