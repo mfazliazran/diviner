@@ -36,9 +36,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.log4j.Logger;
 import org.parosproxy.paros.control.Control;
 import org.parosproxy.paros.extension.history.ExtensionHistory;
 import org.parosproxy.paros.extension.manualrequest.ManualRequestEditorDialog;
+import org.zaproxy.zap.extension.diviner.DivinerExtension;
 
 import com.hacktics.diviner.analyze.AnalyzerUtils;
 import com.hacktics.diviner.gui.scanwizard.ScanWizard;
@@ -57,7 +59,7 @@ public final class Diviner extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 9108675712706972414L;
-	private static final String Version = "1.5.2-Beta";
+	private static final String Version = "1.5.3-Beta";
 	private JTabbedPane tabsMain;
 	private JComboBox<String> domainsList;
 	private JPanel scanResultsPanel; 
@@ -95,7 +97,8 @@ public final class Diviner extends JFrame implements ActionListener {
 	private static final String FILTER = "FILTER";
 	private static final String SHOW_ALL = "Show All";
 
-
+	 /** The Constant log. */
+	private static final Logger log = Logger.getLogger(Diviner.class);
 
 
 	private static final double REQUESTS_IN_BLOCK = 6.0;
@@ -116,7 +119,6 @@ public final class Diviner extends JFrame implements ActionListener {
 		setSize(WINDOW_WIDTH,WINDOW_HEIGHT); //sets size of JFrame and centers it
 		initialize();
 		setLookAndFeel();
-
 		WELCOME_LABEL = new JLabel(DivinerGuiConstants.WELCOME_TEXT);
 
 		//Create necessary instances
@@ -135,7 +137,6 @@ public final class Diviner extends JFrame implements ActionListener {
 		rightPanel.add(leadsPanel);
 		rightPanel.add(advisorTreePanel);
 		rightPanel.add(advisorPanel);
-
 		//Create GUI
 		windowLayout();
 		createMainPanel();
@@ -148,10 +149,10 @@ public final class Diviner extends JFrame implements ActionListener {
 
 		singelton = this;
 		setVisible(true);//make frame visible
-
 		//Load XML file for payload manager
 		try{
-			PayloadDatabaseLoader.getPayloadDatabase(Resources.PAYLOAD_DATABASE_BASIC);
+			//changed to payload db filename (for com.hacktics.payloaddb usage), was PAYLOAD_DATABASE_BASIC
+			PayloadDatabaseLoader.getPayloadDatabase(Resources.PAYLOAD_DATABASE_FILENAME);
 		}
 		catch(Exception e) { e.printStackTrace(); }
 	}
@@ -393,7 +394,13 @@ public final class Diviner extends JFrame implements ActionListener {
 
 	private void initialize() {
 		//set application icon
-		this.setIconImage(GuiUtils.getGuiUtils().getDivinerIcon());
+		
+		try {
+
+			this.setIconImage(GuiUtils.getGuiUtils().getDivinerIcon());
+		
+		
+		
 
 		//add EVENT: window closing button
 		this.addWindowListener(
@@ -403,7 +410,11 @@ public final class Diviner extends JFrame implements ActionListener {
 						dispose();
 					}
 				}
-				);
+			);
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}//end of method initialize
 
 	private void showAboutDialog() {

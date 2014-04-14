@@ -48,8 +48,10 @@ public final class Resources {
     private static final String fileDelimiter = System.getProperty("file.separator"); //OS Independent
     private static final File f = new File ("");
     private static final String directory = f.getAbsolutePath();
+    public static final String PAYLOAD_DATABASE_FILENAME = "hacktics_payload_db(encoded)-v1.1.xml";
     public static final String PAYLOAD_DATABASE_BASIC =
-    		directory + fileDelimiter + "payload-db" + fileDelimiter + "hacktics_payload_db(encoded)-v1.1.xml";
+    		directory + fileDelimiter + "payload-db" + fileDelimiter + PAYLOAD_DATABASE_FILENAME;
+    
 
     public static final String HACKTICS_LOGO =
         BASE_PATH + FD + "images" + FD + "hacktics_icon.jpg";

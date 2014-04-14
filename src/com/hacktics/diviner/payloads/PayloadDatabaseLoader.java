@@ -16,6 +16,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import com.hacktics.payloaddb.PayloadDB;
+
 /**
  * The PayloadDatabaseLoader class is used to load the various entries from the
  * payload database XML file into a PayloadDatabaseContainer object.
@@ -214,12 +216,14 @@ public final class PayloadDatabaseLoader implements Serializable {
 	public static void getPayloadDatabase(String pathToPayloadDb) throws Exception {
 		//		System.out.println(Resources.PAYLOAD_DATABASE_BASIC);
 		//		System.out.println(pathToPayloadDb);
-		String f = readFileAsString(pathToPayloadDb);
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		InputSource ins = new InputSource(new StringReader(f));
+		//String f = readFileAsString(pathToPayloadDb);
+		//DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		//DocumentBuilder builder = factory.newDocumentBuilder();
+		//InputSource ins = new InputSource(new StringReader(f));
 
-		Document doc = builder.parse(ins);
+		//Document doc = builder.parse(ins);
+		
+		Document doc = PayloadDB.getDocumentBuilder(pathToPayloadDb, PayloadDatabaseLoader.class.getResource("/com/hacktics/diviner/resource/injectionpayloads/"+pathToPayloadDb));
 
 		parseDivinerXML(doc.getDocumentElement());
 

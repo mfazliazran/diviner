@@ -13,12 +13,16 @@ import java.net.URL;
 //import java.util.Locale;
 //import java.util.ResourceBundle;
 
+
+import org.apache.log4j.Logger;
+
 import javax.swing.JMenuItem;
 
 import org.parosproxy.paros.Constant;
 import org.parosproxy.paros.extension.ExtensionAdaptor;
 import org.parosproxy.paros.extension.ExtensionHook;
 import org.parosproxy.paros.view.View;
+import org.zaproxy.zap.spider.Spider;
 
 /*
  * This class is defines the extension.
@@ -29,7 +33,9 @@ public class DivinerExtension extends ExtensionAdaptor {
    // private ResourceBundle messages = null;
 
  
-   
+    /** The Constant log. */
+	private static final Logger log = Logger.getLogger(DivinerExtension.class);
+	
     public DivinerExtension() {
         super();
         initialize();
@@ -75,7 +81,13 @@ public class DivinerExtension extends ExtensionAdaptor {
                         // This is where you do what you want to do.
                         // In this case we'll just show a popup message.
                         //View.getSingleton().showMessageDialog(getMessageString("Diviner"));
-                	Diviner diviner = new com.hacktics.diviner.gui.Diviner();
+                	try {
+                		Diviner diviner = new com.hacktics.diviner.gui.Diviner();
+                	}
+                	catch (Exception Ex) {
+                		log.error("There was an error while loading Diviner: ", Ex);
+                	}
+                	
                 }
             });
         }

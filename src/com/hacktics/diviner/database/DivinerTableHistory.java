@@ -32,8 +32,10 @@ public class DivinerTableHistory extends AbstractTable {
 	private static final String RESHEADER	= "RESHEADER";
 	private static final String RESBODY		= "RESBODY";
 	private static final String TAG         = "TAG";
-	// ZAP: Added NOTE field to history table
+	// Alex: Added NOTE field to history table
 	private static final String NOTE        = "NOTE";
+	// Alex: Added RESPONSEFROMTARGETHOST field to history table
+	private static final String RESPONSEFROMTARGETHOST = "RESPONSEFROMTARGETHOST";
 
 	private static final String	HISTORYID	= "HISTID";
 	private static final String INSCOPE	= "INSCOPE";
@@ -184,7 +186,8 @@ public class DivinerTableHistory extends AbstractTable {
 						rs.getString(RESHEADER),
 						rs.getBytes(RESBODY),
 						rs.getString(TAG),
-						rs.getString(NOTE)			// ZAP: Added note
+						rs.getString(NOTE),			// ZAP: Added note
+						rs.getBoolean(RESPONSEFROMTARGETHOST)
 						);
 			}
 		} finally {
