@@ -54,7 +54,7 @@ public class AnalyzeController extends JPanel implements ActionListener, Propert
 			return null;
 		}
 
-		/*
+;		/*
 		 * Executed in event dispatching thread
 		 */
 		@Override
