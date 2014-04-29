@@ -24,7 +24,6 @@ import com.hacktics.diviner.gui.PayloadManager.labelTableCellEditor;
 import com.hacktics.diviner.gui.PayloadManager.labelTableCellRenderer;
 import com.hacktics.diviner.gui.scanwizard.WizardTable;
 import com.hacktics.diviner.payloads.PlatformContainer;
-import com.sittinglittleduck.DirBuster.gui.JTableTree.AbstractCellEditor;
 
 public class PlatformTable extends JTable{
 

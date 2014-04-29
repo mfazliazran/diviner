@@ -59,7 +59,7 @@ public final class Diviner extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 9108675712706972414L;
-	private static final String Version = "1.5.3-Beta";
+	private static final String Version = "1.6.0-Beta";
 	private JTabbedPane tabsMain;
 	private JComboBox<String> domainsList;
 	private JPanel scanResultsPanel; 

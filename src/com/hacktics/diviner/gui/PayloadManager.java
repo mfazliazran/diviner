@@ -19,6 +19,7 @@ import java.util.TreeSet;
 
 import javax.print.DocFlavor.STRING;
 import javax.swing.AbstractButton;
+import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -45,6 +46,7 @@ import org.parosproxy.paros.extension.history.ExtensionHistory;
 import org.parosproxy.paros.extension.manualrequest.ManualRequestEditorDialog;
 import org.parosproxy.paros.network.HtmlParameter;
 import org.parosproxy.paros.network.HttpMessage;
+
 import com.hacktics.diviner.analyze.AnalyzerUtils;
 import com.hacktics.diviner.database.DivinerRecordResult;
 import com.hacktics.diviner.gui.controllers.AttackItem;
@@ -62,7 +64,6 @@ import com.hacktics.diviner.payloads.PayloadDatabaseLoader;
 import com.hacktics.diviner.payloads.PlatformContainer;
 import com.hacktics.diviner.payloads.SwapRuleContainer;
 import com.hacktics.diviner.payloads.constants.XMLConstants;
-import com.sittinglittleduck.DirBuster.gui.JTableTree.AbstractCellEditor;
 
 /**
  * 
@@ -944,6 +945,12 @@ public class PayloadManager extends JDialog implements ActionListener{
 		public Component getTableCellEditorComponent(JTable arg0, Object arg1,
 				boolean arg2, int row, int column) {
 
+			return null;
+		}
+
+		@Override
+		public Object getCellEditorValue() {
+			// TODO Auto-generated method stub
 			return null;
 		}
 
