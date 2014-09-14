@@ -26,8 +26,6 @@ import javax.swing.JTextField;
 
 import com.hacktics.diviner.constants.Titles;
 import com.hacktics.diviner.payloads.AdvancedRuleContainer;
-import com.hacktics.diviner.payloads.AttackVectorContainer;
-
 import com.hacktics.diviner.payloads.DelimiterSwapRuleContainer;
 
 

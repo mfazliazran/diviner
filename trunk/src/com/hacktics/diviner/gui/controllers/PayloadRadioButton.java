@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.AbstractButton;
-import javax.swing.JRadioButton;
 import javax.swing.Timer;
 
 import com.hacktics.diviner.analyze.AnalyzerUtils;

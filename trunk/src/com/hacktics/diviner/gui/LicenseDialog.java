@@ -1,24 +1,8 @@
 package com.hacktics.diviner.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.Frame;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.ScrollPane;
-
-import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import org.parosproxy.paros.extension.AbstractDialog;
-
-import java.awt.Dialog.ModalityType;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LicenseDialog extends JDialog {
 	public LicenseDialog() {

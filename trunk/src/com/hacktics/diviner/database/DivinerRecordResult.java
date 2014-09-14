@@ -1,8 +1,6 @@
 package com.hacktics.diviner.database;
 
 import com.hacktics.diviner.analyze.HISTORY_MODE;
-import com.hacktics.diviner.analyze.OUTPUT_LOCATION;
-import com.hacktics.diviner.gui.OUTPUT_TYPE;
 import com.hacktics.diviner.gui.RESULT_TYPE;
 
 /**
@@ -49,6 +47,25 @@ public class DivinerRecordResult {
 		this.outputPlugin = outputPlugin;
 	}
 	
+    public DivinerRecordResult(DivinerRecordResult record) {
+		this.resultId = record.resultId;
+		this.paramID = record.paramID;
+		this.inpage = record.inpage;
+		this.outpage = record.outpage;
+		this.type = record.type;	//session/DB/reflection
+		this.name = record.name;
+		this.value = record.value;
+		this.scenario = record.scenario;
+		this.histMode = record.histMode;
+		this.inputPageID = record.inputPageID;
+		this.outputPageID = record.outputPageID;
+		this.diffPercent = record.diffPercent;
+		this.tokenType = record.tokenType;
+		this.isTokenAppendMode = record.isTokenAppendMode;
+		this.tokenValue = record.tokenValue;
+		this.outputPlugin = record.outputPlugin;
+	}
+    
 	public long getResultId() {
 		return resultId;
 	}

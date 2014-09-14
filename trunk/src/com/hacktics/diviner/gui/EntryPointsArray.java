@@ -5,22 +5,14 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.JButton;
-
 import org.apache.commons.httpclient.URIException;
 import org.parosproxy.paros.db.RecordHistory;
-import org.parosproxy.paros.model.HistoryReference;
 import org.parosproxy.paros.network.HtmlParameter;
 import org.parosproxy.paros.network.HttpMessage;
 
 import com.hacktics.diviner.analyze.AnalyzerUtils;
 import com.hacktics.diviner.analyze.HISTORY_MODE;
 import com.hacktics.diviner.analyze.SCENARIO_MODE;
-import com.hacktics.diviner.analyze.TOKEN_MODE;
 import com.hacktics.diviner.analyze.TOKEN_TYPE;
 import com.hacktics.diviner.database.DivinerRecordResult;
 import com.hacktics.diviner.database.DivinerTableResults;

@@ -1,14 +1,9 @@
 package com.hacktics.diviner.analyze;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.httpclient.URIException;
@@ -22,15 +17,12 @@ import com.hacktics.diviner.csrf.CsrfToken;
 import com.hacktics.diviner.database.DivinerRecordParam;
 import com.hacktics.diviner.database.DivinerTableFlow;
 import com.hacktics.diviner.diffutil.GetResponsesSimilarity;
-import com.hacktics.diviner.diffutil.Response_Diffs;
 import com.hacktics.diviner.diffutil.Response_Diffs.Diff;
-import com.hacktics.diviner.diffutil.Response_Manager;
 import com.hacktics.diviner.diffutil.TokenLocations;
 import com.hacktics.diviner.diffutil.TokenWrapper;
 import com.hacktics.diviner.diffutil.UnRelevantInfo;
 import com.hacktics.diviner.diffutil.UnRelevantTag;
 import com.hacktics.diviner.gui.OUTPUT_TYPE;
-import com.hacktics.diviner.gui.ParameterEffect;
 import com.hacktics.diviner.gui.RESULT_TYPE;
 import com.hacktics.diviner.gui.scanwizard.DiffCheckBox;
 import com.hacktics.diviner.gui.scanwizard.ExceptionsConfigDialog;
@@ -169,6 +161,10 @@ public abstract class AbstractAnalyzer {
 
 		case url:
 			AnalyzerUtils.setParameterGetRequest(msg, param.getName(), token);
+			break;
+		case cookie:
+			break;
+		default:
 			break;
 		}
 	}

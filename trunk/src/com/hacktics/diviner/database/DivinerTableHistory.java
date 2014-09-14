@@ -8,7 +8,6 @@ import org.parosproxy.paros.db.AbstractTable;
 import org.parosproxy.paros.db.RecordHistory;
 import org.parosproxy.paros.model.HistoryReference;
 import org.parosproxy.paros.model.Model;
-import org.parosproxy.paros.network.HttpBody;
 import org.parosproxy.paros.network.HttpMalformedHeaderException;
 import java.util.ArrayList;
 import java.util.Collections;

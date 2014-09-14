@@ -1,28 +1,20 @@
 package com.hacktics.diviner.gui;
 
-import java.awt.Color;
-import java.awt.GridLayout;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
-
+import java.util.SortedSet;
+import java.util.TreeSet;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import org.fife.ui.rsyntaxtextarea.TokenTypes;
-
+import javax.swing.JOptionPane;
 import com.hacktics.diviner.analyze.AnalyzerUtils;
 import com.hacktics.diviner.analyze.HISTORY_MODE;
 import com.hacktics.diviner.analyze.SCENARIO_MODE;
 import com.hacktics.diviner.analyze.TOKEN_TYPE;
 import com.hacktics.diviner.database.DivinerRecordResult;
-import com.hacktics.diviner.database.DivinerTableResults;
 import com.hacktics.diviner.gui.scanwizard.ScanWizard;
-import com.hacktics.diviner.zapDB.ZapHistoryDB;
 
 //TODO:Divide the HTML to reflection/exception...
 public class ReportGenerator {
@@ -41,6 +33,35 @@ public class ReportGenerator {
 		ReportGenerator.results = results;
 	}
 
+	/*Since token value is distinct, create a custom comparator which will check for duplicates based on predefined fields*/
+	public static ArrayList<DivinerRecordResult> getDistinct(ArrayList<DivinerRecordResult> fullList)
+	{		
+		recordCompare reCompare = new recordCompare(); //Create a custom comparator
+		
+		//Assign the comparator and override the compare method
+		SortedSet<DivinerRecordResult> tree = new TreeSet<DivinerRecordResult>(reCompare);
+		
+		//Add the results to a tree set while comparing and removing duplicated pairs
+		for (DivinerRecordResult record: fullList) {
+			DivinerRecordResult element  = record;
+			tree.add(new DivinerRecordResult(element));
+		}
+		
+		//Copy the tree set content to a new list
+		ArrayList<DivinerRecordResult> dList = new ArrayList<DivinerRecordResult>(tree);
+		
+		//Remove duplicated records on unsorted the final unsorted list of results
+		for (int i=0; i<dList.size(); i++) {
+			for (int j=i+1; j<dList.size(); j++) {
+				if (reCompare.isRecordEqual(dList.get(i),dList.get(j))) {
+					dList.remove(j); //Remove the duplicated record from list
+					j--; //Decrement j case removal so we won't miss potential duplicates on the former j index
+				}
+			}
+		}
+		return dList;
+	}
+	
 	public static void generateReport(File HTMLReport) {
 		int resultCounter = 0;
 		StringBuffer htmlText = new StringBuffer(HTML_PAGE_START);
@@ -53,10 +74,10 @@ public class ReportGenerator {
 		ArrayList<DivinerRecordResult> resultsList = null;
 		
 		try {
-		resultsList = AnalyzerUtils.getAllDistinctResults();
+			resultsList = getDistinct(AnalyzerUtils.getAllDistinctResults());
 		} 
 		catch(Exception ex) { GuiUtils.getGuiUtils().showErrorDialog(new JDialog(), "No results to show in report");};
-		
+
 		if (resultsList != null) {
 			for (DivinerRecordResult record : resultsList) {
 				
@@ -64,44 +85,42 @@ public class ReportGenerator {
 				
 				switch  (OUTPUT_TYPE.values()[record.getType()]) {
 				
-				case DATABASE_REFLECTION:
-					htmlTextTemp = htmlTextReflection;
-					break;
-				case DATABASE_EXCEPTION:
-					htmlTextTemp = htmlTextException;
-					break;
-				case DIFF:
-					htmlTextTemp = htmlTextDiff;
-					break;
-				case OUTPUT_EXCEPTION:
-					htmlTextTemp = htmlTextException;
-					break;
-				case OUTPUT_REFLECTION:
-					htmlTextTemp = htmlTextReflection;
-					break;
-				case SESSION_EXCEPTION:
-					htmlTextTemp = htmlTextException;
-					break;
-				case SESSION_REFLECTION:
-					htmlTextTemp = htmlTextReflection;
-					break;
-				
+					case DATABASE_REFLECTION:
+						htmlTextTemp = htmlTextReflection;
+						break;
+					case DATABASE_EXCEPTION:
+						htmlTextTemp = htmlTextException;
+						break;
+					case DIFF:
+						htmlTextTemp = htmlTextDiff;
+						break;
+					case OUTPUT_EXCEPTION:
+						htmlTextTemp = htmlTextException;
+						break;
+					case OUTPUT_REFLECTION:
+						htmlTextTemp = htmlTextReflection;
+						break;
+					case SESSION_EXCEPTION:
+						htmlTextTemp = htmlTextException;
+						break;
+					case SESSION_REFLECTION:
+						htmlTextTemp = htmlTextReflection;
+						break;
 				}
+				
+				//Append to html report
 				htmlTextTemp.append(TABLE_START);
+				
 				htmlTextTemp.append(getTableTitle(resultCounter + ". " + record.getName(), record.getInPage() + " --> " + record.getOutPage()));
 				htmlTextTemp.append(getTableLine(Advisor.SERVER_STORAGE, OUTPUT_TYPE.values()[record.getType()].name()));
 				htmlTextTemp.append(getTableLine(Advisor.ORIGINAL_VAL, record.getValue()));
-//				htmlTextTemp.append(getTableLine(Advisor.TOKEN_VAL, record.getTokenValue()));
+				htmlTextTemp.append(getTableLine(Advisor.TOKEN_VAL, record.getTokenValue()));
 				htmlTextTemp.append(getTableLine(Advisor.SCENARIO, SCENARIO_MODE.values()[record.getScenario()].name()));
 				htmlTextTemp.append(getTableLine(Advisor.HISTORY, HISTORY_MODE.values()[record.getHistMode()].name()));
 				htmlTextTemp.append(getTableLine(Advisor.ZAP_SOURCE, Integer.toString(record.getInputID())));
 				htmlTextTemp.append(getTableLine(Advisor.ZAP_TARGET, Integer.toString(record.getOutputID())));
 				htmlTextTemp.append(getTableLine(Advisor.TOKEN_TYPE, TOKEN_TYPE.values()[record.getTokenType()].name()));
 
-				
-				
-				
-	
 				htmlTextTemp.append(TABLE_END);
 
 				
@@ -116,6 +135,8 @@ public class ReportGenerator {
 				BufferedWriter out = new BufferedWriter(fstream);
 				out.write(htmlText.toString());
 				out.close();
+				
+				JOptionPane.showMessageDialog(new JDialog(), "Report file has been saved");
 			}
 			catch (Exception ex) {	/* no log file was selected */}
 		}

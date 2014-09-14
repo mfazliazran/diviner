@@ -28,7 +28,7 @@ public class JCheckBoxTree extends JTree{
 	 * 
 	 */
 	private static final long serialVersionUID = -4612452564887958625L;
-	Vector checkedPaths = new Vector();
+	Vector<TreePath> checkedPaths = new Vector<TreePath>();
     JCheckBoxTreeRenderer checkBoxCellRenderer;
     
     public JCheckBoxTree(Object[] value) {
@@ -182,7 +182,11 @@ public class JCheckBoxTree extends JTree{
     }
     
     private class JCheckBoxTreeRenderer extends DefaultTreeCellRenderer {
-        private JPanel panel = new JPanel();
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private JPanel panel = new JPanel();
         public JCheckBox checkBox  = new JCheckBox();
         
         public JCheckBoxTreeRenderer() {

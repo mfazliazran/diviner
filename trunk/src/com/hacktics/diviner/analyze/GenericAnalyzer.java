@@ -1,6 +1,5 @@
 package com.hacktics.diviner.analyze;
 
-import java.sql.SQLException;
 import java.util.TreeSet;
 import javax.swing.JTextArea;
 import org.parosproxy.paros.db.RecordHistory;
@@ -77,6 +76,10 @@ public abstract class GenericAnalyzer {
 			case FULL_HISTORY:
 				sb.append("\t\"" + FULL_HIST + "\" " + LINE_BREAK);
 				break;
+		case CUSTOM_HISTORY:
+			break;
+		default:
+			break;
 		}
 		return sb.toString();
 	}

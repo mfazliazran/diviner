@@ -4,15 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.LayoutManager;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
@@ -22,7 +17,7 @@ public class LicensePanel extends JPanel {
 
 
 	private static final long serialVersionUID = 1L;
-	private static final String VERSION = "Version: " + "1.6.0 Beta";
+	private static final String VERSION = "Version: " + "2.0.0 Beta";
 	
 	private static final String LICENSE = "<html><body><h1><p>Software License</p></h1>"
 			+ "<p><strong>Diviner</strong></p>"

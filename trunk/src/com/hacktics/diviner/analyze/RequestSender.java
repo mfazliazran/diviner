@@ -20,11 +20,8 @@ import com.hacktics.diviner.csrf.Url;
  */
 public class RequestSender {
 	public static final int TYPE_DIVINER = 9;
-	public static final boolean ALLOW_STATE = false;
-	
-	/*	Added initiator (MANUAL_REQUEST_INITIATOR) for HttpSender when upgrading to ZAP 1.4.1 - r29, issue 29	*/
-	/*	Changed initiator (ACTIVE_SCANNER_INITIATOR) for multithreading (Don't update ZAP History table) */
-	public static final int INITIATOR = HttpSender.ACTIVE_SCANNER_INITIATOR; 
+	public static final boolean ALLOW_STATE = true;
+	public static final int INITIATOR = HttpSender.ACTIVE_SCANNER_INITIATOR; /*	Added initiator for HttpSender when upgrading to ZAP 1.4.1 - r29, issue 29	*/
 	private static HttpSender sender = new HttpSender(Model.getSingleton().getOptionsParam().getConnectionParam(), ALLOW_STATE,INITIATOR);
 	private static final String POST = "POST";
 

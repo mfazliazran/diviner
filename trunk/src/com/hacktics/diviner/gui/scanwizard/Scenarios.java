@@ -11,11 +11,14 @@ import com.hacktics.diviner.analyze.SCENARIO_MODE;
  */
 
 public class Scenarios {
+	
+	public static final String MULTITHREAD_TEXT ="Multi-threading";
+	public static final String MULTITHREAD ="Run On Multi-thread Mode";
 	public static final String SCENARIOS_TEXT = "Analyzing Scenarios";
 	public static final String VERIFY_MODE_TEXT = "Verify Mode";
 	private static final String HISTORY_MODE_TEXT = "History Modes";
-	private static final String[] SCENARIOS = {"Login First (Login -> Source -> Target)", "No Login (Source -> Target)", "Login After (Source -> Login -> Target)"};
-	private static final String[] HIST_MODE = {"No History", "Partial History (Partial History Before Each Scenario)", "Full History (Replay History Before Each Scenario)", "Custom History"};
+	private static final String[] SCENARIOS = {"Login First", "Public Direct", "Login After"};
+	private static final String[] HIST_MODE = {"No History", "Partial History", "Full History", "Custom History"};
 	private static final String CUSTOM_HISTORY_MODE = "Custom History";
 
 	private static JCheckBox [] scenarios;
@@ -23,6 +26,10 @@ public class Scenarios {
 	private static JCheckBox verifyModeCheckbox;
 	private static final boolean ENABLED = true;
 	public static final String TESTING_MODE = " Testing Mode\n";
+
+	
+	//Add checkbox MULTITHRED
+	private static JCheckBox  multithread;
 	
 	public Scenarios()
 	{
@@ -33,6 +40,7 @@ public class Scenarios {
 	{
 		scenarios = new JCheckBox[SCENARIOS.length];
 		historyModes = new JCheckBox[HIST_MODE.length];
+		
 		int i = 0;
 		for (String scenario : SCENARIOS)
 		{
@@ -45,13 +53,14 @@ public class Scenarios {
 		{
 			historyModes[i] = new JCheckBox("<html><i>" + hitMode + "</i></html>");
 			if (hitMode != CUSTOM_HISTORY_MODE) {
-				historyModes[i].setSelected(false);
+				historyModes[i].setSelected(true);
 			}
 			i++;
 		}
-		historyModes[HISTORY_MODE.NO_HISTORY.ordinal()].setSelected(true); //by default, don't use history replay
+		multithread = new JCheckBox("<html><i>" + MULTITHREAD + "</i></html>");
+		multithread.setSelected(true);
 		
-		verifyModeCheckbox = new JCheckBox("<html><i>Verify Results (Enhance Accuracy)</i></html>");
+		verifyModeCheckbox = new JCheckBox("<html><i>Safer and More Accurate scan</i></html>");
 		verifyModeCheckbox.setSelected(true);
 	}
 
@@ -177,4 +186,20 @@ public class Scenarios {
 	public String getScenariosTitle() {
 		return SCENARIOS_TEXT;
 	}
+	
+	public String getMultithreadTitle() {
+		return  MULTITHREAD_TEXT;
+	}
+	
+	///add
+	
+	
+	public boolean isMultithreadingEnabled(){
+		return multithread.isSelected();
+	}
+
+	public JCheckBox getMultithread() {
+		return multithread;
+	}
 }
+

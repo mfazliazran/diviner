@@ -10,9 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -37,11 +35,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
-import org.parosproxy.paros.control.Control;
-import org.parosproxy.paros.extension.history.ExtensionHistory;
-import org.parosproxy.paros.extension.manualrequest.ManualRequestEditorDialog;
-import org.zaproxy.zap.extension.diviner.DivinerExtension;
-
 import com.hacktics.diviner.analyze.AnalyzerUtils;
 import com.hacktics.diviner.gui.scanwizard.ScanWizard;
 import com.hacktics.diviner.payloads.PayloadDatabaseLoader;
@@ -59,7 +52,7 @@ public final class Diviner extends JFrame implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 9108675712706972414L;
-	private static final String Version = "1.6.0-Beta";
+	private static final String Version = "2.0.0-Beta";
 	private JTabbedPane tabsMain;
 	private JComboBox<String> domainsList;
 	private JPanel scanResultsPanel; 
@@ -105,7 +98,7 @@ public final class Diviner extends JFrame implements ActionListener {
 	private static final double RESULTS_IN_BLOCK = 6.0;
 	private static final String REQUESTS_RIGHT = "REQUESTS_RIGHT";
 	private static final String REQUESTS_LEFT = "REQUESTS_LEFT";
-	private static final String AUTHORS = "Diviner " + Version + "\nLead Developers: Shay Chen, Eran Tamari and Alex Mor\nAdditional Contribution: Michal Goldstein, Liran Shienbox\nTsachi Itschak and Lior Suliman\nImages and artwork include content from the following collections:\nhttp://www.fatcow.com/free-icons";
+	private static final String AUTHORS = "Diviner " + Version + "\nLead Developers: Shay Chen, Eran Tamari and Alex Mor\nAdditional Contribution: Tomer Peleg\nEre\nBarash\nMaor Ben Shoeff\nMichal Goldstein\nLiran Shienbox\nTsachi Itschak\nLior Suliman\n\nImages and artwork include content from the following collections:\nhttp://www.fatcow.com/free-icons";
 
 	private static File logFile;
 	enum TABS{ Results, Requests }
@@ -244,12 +237,6 @@ public final class Diviner extends JFrame implements ActionListener {
 			break;
 
 		case GENERATE_REPORT:
-//TODO:
-			/////phantom JS
-			try{
-				Runtime.getRuntime().exec("C:\\Users\\eran.tamari\\Downloads\\phantomjs-1.8.1-windows\\phantomjs C:\\Users\\eran.tamari\\Downloads\\phantomjs-1.8.1-windows\\examples\\rasterize.js http://www.google.com c:\\clock6.png");
-			}
-			catch (Exception ex) { ex.printStackTrace(); }
 
 			File HTMLReport;
 			JFileChooser fileChooserReport = new JFileChooser();
