@@ -3,12 +3,12 @@
 			<addon_diviner>
 			<name>Diviner - Web Penetration Tool</name>
 			<description>Diviner is an active information gathering platform aimed to enhance the tester's decision making process.</description>
-			<version>15</version>
-			<file>diviner-alpha-15.zap</file>
+			<version>17</version>
+			<file>diviner-alpha-17.zap</file>
 			<status>alpha</status>
-			<changes>Fixed Diff Plugin</changes>
-			<url>https://zap-extensions.googlecode.com/files/diviner-alpha-15.zap</url>
-			<size>3236</size>
-			<date>2014-03-15</date>
+			<changes>Added Multi Threading to Scenarios</changes>
+			<url>https://zap-extensions.googlecode.com/files/diviner-alpha-17.zap</url>
+			<size>3246</size>
+			<date>2014-09-14</date>
 			</addon_diviner>
 		</ZAP>
