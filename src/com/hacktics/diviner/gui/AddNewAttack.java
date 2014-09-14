@@ -3,12 +3,9 @@ package com.hacktics.diviner.gui;
 
 import java.awt.GridLayout;
 import java.awt.Point;
-import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
-import java.util.HashMap;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -17,14 +14,14 @@ import javax.swing.JTextField;
 
 import com.hacktics.diviner.constants.Titles;
 import com.hacktics.diviner.payloads.AttackVectorContainer;
-import com.hacktics.diviner.payloads.DelimiterSwapRuleContainer;
-import com.hacktics.diviner.payloads.ExploitContainer;
-import com.hacktics.diviner.payloads.PayloadContainer;
 import com.hacktics.diviner.payloads.PayloadDatabaseLoader;
-import com.hacktics.diviner.payloads.PlatformContainer;
 
 public class AddNewAttack extends JDialog{
-	 private JTextField txtNameField = null;
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4334454426651084517L;
+	private JTextField txtNameField = null;
 	    private JTextField txtDescriptionField = null;
 	    private JTextField txtTemplateField = null;
 	    

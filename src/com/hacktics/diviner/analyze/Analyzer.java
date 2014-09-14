@@ -6,7 +6,6 @@ import javax.swing.JTextArea;
 
 import org.parosproxy.paros.db.RecordHistory;
 import org.parosproxy.paros.network.HtmlParameter;
-import org.parosproxy.paros.network.HttpBody;
 import org.parosproxy.paros.network.HttpMessage;
 
 import com.hacktics.diviner.gui.scanwizard.ScanWizard;
@@ -26,6 +25,7 @@ public  class Analyzer extends GenericAnalyzer {
 		initAnalyzer(histMode, scenario, detailsPanel, isVerifyMode);
 	}
 
+	@Override
 	public void analyze(boolean isTokenAppendMode) {
 
 		detailsPanel.append(getTestModeDetails(scenario));

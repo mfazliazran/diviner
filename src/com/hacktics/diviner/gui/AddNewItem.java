@@ -2,11 +2,9 @@ package com.hacktics.diviner.gui;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.awt.Dialog.ModalityType;
 import java.util.Collection;
 import java.util.HashMap;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 
@@ -15,6 +13,10 @@ import com.hacktics.diviner.payloads.PlatformContainer;
 
 public class AddNewItem extends JDialog{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1886053340569161668L;
 	protected static PayloadManager fatherWindow = null;
 	protected String SelectedAttack= null;
 	Collection<AttackVectorContainer> AttackVectors = null;

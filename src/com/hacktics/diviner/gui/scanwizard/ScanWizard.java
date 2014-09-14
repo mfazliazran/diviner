@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 import javax.swing.SwingWorker;
 
 import org.parosproxy.paros.network.HttpMessage;
@@ -25,7 +26,6 @@ import org.parosproxy.paros.network.HttpMessage;
 import com.hacktics.diviner.analyze.AnalyzeController;
 import com.hacktics.diviner.analyze.AnalyzerUtils;
 import com.hacktics.diviner.analyze.Plugins;
-import com.hacktics.diviner.analyze.TOKEN_MODE;
 import com.hacktics.diviner.diffutil.Response_Manager;
 import com.hacktics.diviner.gui.DivinerTitleBorder;
 import com.hacktics.diviner.gui.GuiUtils;
@@ -97,7 +97,7 @@ public class ScanWizard extends JDialog implements ActionListener{
 
 	private void initTabs()	{
 		currentTab = TabsEnum.DOMAIN_TAB_INDEX;
-		tabs = new JTabbedPane(JTabbedPane.LEFT);
+		tabs = new JTabbedPane(SwingConstants.LEFT);
 		setDomainPanel();
 		setPluginsPanel();
 		setScenariosPanel();
@@ -133,26 +133,37 @@ public class ScanWizard extends JDialog implements ActionListener{
 
 	private void setScenariosPanel() {
 		scenarios = new Scenarios();
-		JPanel Containerpanel = new JPanel(new GridLayout(3 , 1 , 5 , 2));
+		
+		JPanel Containerpanel = new JPanel(new GridLayout(4 , 1 , 5 , 2));
+		
 		JPanel scenariosPanel = new JPanel(new GridLayout(3 , 3 , 5 , 4));
 		JPanel historyPanel = new JPanel(new GridLayout(3 , 3 , 5 , 4));
+		JPanel multiThreadPanel = new JPanel(new GridLayout(1 , 1 , 0 , 0));
 		JPanel verifyPanel = new JPanel(new GridLayout(1 , 1 , 0 , 0));
+		
 		for (JCheckBox scenario : scenarios.getAllScenarios())
 		{
 			scenariosPanel.add(scenario);
 		}
+		
 		for (JCheckBox histMode : scenarios.getAllHistModes())
 		{
 			historyPanel.add(histMode);
 		}
+		
+		multiThreadPanel.setBorder(new DivinerTitleBorder(scenarios.getMultithreadTitle()));
 		historyPanel.setBorder(new DivinerTitleBorder(scenarios.getHistoryTitle()));
 		verifyPanel.setBorder(new DivinerTitleBorder(scenarios.getVerifyTitle()));
 		scenariosPanel.setBorder(new DivinerTitleBorder(scenarios.getScenariosTitle()));
 
 		verifyPanel.add(scenarios.getVerifyBox());
+		multiThreadPanel.add(scenarios.getMultithread());
+		
 		Containerpanel.add(scenariosPanel);
 		Containerpanel.add(historyPanel);
+		Containerpanel.add(multiThreadPanel);
 		Containerpanel.add(verifyPanel);
+		
 		ScenraioTabContent scenarioTab = new ScenraioTabContent(BACK, Containerpanel, this);
 		tabs.addTab("Scenarios" , scenarioTab);
 
@@ -211,6 +222,7 @@ public class ScanWizard extends JDialog implements ActionListener{
 		tabs.addTab("Compare", diffTab);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()){
 		case OK:
@@ -470,6 +482,7 @@ public class ScanWizard extends JDialog implements ActionListener{
 	//Handles closing event when the wizard is successful
 	class FrameListener extends WindowAdapter
 	{
+		@Override
 		public void windowClosed(WindowEvent e)
 		{
 			closeDialog();

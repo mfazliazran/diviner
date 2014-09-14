@@ -4,18 +4,12 @@ package com.hacktics.diviner.payloads;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.Serializable;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
 import com.hacktics.payloaddb.PayloadDB;
 
 /**

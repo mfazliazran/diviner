@@ -24,9 +24,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.OptionPaneUI;
-
-import com.hacktics.diviner.analyze.Clairvoyance;
 import com.hacktics.diviner.analyze.CodeBehaviour;
 import com.hacktics.diviner.gui.controllers.BlinkingButton;
 import com.hacktics.diviner.gui.scanwizard.Scenarios;

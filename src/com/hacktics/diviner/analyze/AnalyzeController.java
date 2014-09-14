@@ -15,10 +15,16 @@ import com.hacktics.diviner.gui.GuiUtils;
 import com.hacktics.diviner.gui.ProgressOutput;
 import com.hacktics.diviner.gui.scanwizard.Scenarios;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import java.beans.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 /**
@@ -41,6 +47,16 @@ public class AnalyzeController extends JPanel implements ActionListener, Propert
 	private JFrame frame;
 	private Scenarios scenarios;
 	private static final int COMPLETE = 100;
+	private static final int LFM = 0;
+	private static final int NLM = 1;
+	private static final int LAM = 2;
+	private static final int RAND_LOW_VAL = 0;
+	private static final int RAND_HIGH_VAL = 6;
+	private static final int THREADS_NUM = 4;
+	private static final int MINUTE = 60;
+	private static final int PROGRESS_INTERVAL = 100;
+	private ExecutorService exeSrvc;
+	
 	class Task extends SwingWorker<Void, Void> {
 		/*
 		 * Main task. Executed in background thread.
@@ -54,7 +70,7 @@ public class AnalyzeController extends JPanel implements ActionListener, Propert
 			return null;
 		}
 
-;		/*
+		/*
 		 * Executed in event dispatching thread
 		 */
 		@Override
@@ -63,7 +79,7 @@ public class AnalyzeController extends JPanel implements ActionListener, Propert
 			showResultsButton.setEnabled(true);
 			setCursor(null); //turn off the wait cursor
 			taskOutput.append("Done!\n");
-			//  progressBar.setIndeterminate(false);
+			//progressBar.setIndeterminate(false);
 		}
 	}
 
@@ -100,7 +116,7 @@ public class AnalyzeController extends JPanel implements ActionListener, Propert
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 	}
-
+	
 	//Handles the closing event of the Scan Wizard
 	public class CloseListener extends WindowAdapter
 	{
@@ -145,7 +161,6 @@ public class AnalyzeController extends JPanel implements ActionListener, Propert
 			frame.dispose();
 			break;
 		}
-
 	}
 
 	/**
@@ -179,46 +194,159 @@ public class AnalyzeController extends JPanel implements ActionListener, Propert
 		frame.pack();
 		frame.setVisible(true);
 	}
-
-
-
+	
+	private void drawBlock()
+	{
+		taskOutput.append("--------------------------------------------------------------------------------------------------\n");		
+	}
+	
+	private void calcAnalysisDuration(Date startTime)
+	{
+		Date endTime = new Date();
+		double secDuration = (endTime.getTime() - startTime.getTime())/1000;
+		String minResult = String.format("%.2f", secDuration/MINUTE);
+		
+		drawBlock();
+		taskOutput.append("Target Analysis Finished After " + secDuration + " Sec. [ Approx. " + minResult + " Min. ] \n");
+		drawBlock();
+	}
+	
+	private void printAnalyzeStart()
+	{
+		GregorianCalendar gcalendar = new GregorianCalendar();
+		
+		taskOutput.append("> Starting Diviner Analysis at:");
+		taskOutput.append(gcalendar.get(Calendar.HOUR_OF_DAY) + ":");
+		taskOutput.append(gcalendar.get(Calendar.MINUTE) + ":");
+		taskOutput.append(gcalendar.get(Calendar.SECOND) + "\n\n");
+	}
+//-------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------
 	//Runs the selected scenarios
 	private void doAnalyze()
 	{
-
-		int progressBarInterval = (100 / scenarios.getEnabledScenariosCount());
-		taskOutput.append("STARTING DIVINER ANALYSIS\n");
+		exeSrvc = Executors.newFixedThreadPool(THREADS_NUM);
+		Date startTime = new Date();		
+		
+		printAnalyzeStart();	
+		
 		//Set CSRF tokens from ZAP history
 		ResponseParser.loadCsrfTokensFromHistory(); 
-		taskOutput.append("Loading CSRF Tokens\n\n");
+		taskOutput.append("> Loading CSRF Tokens\n\n");
 
-		for (int scenariosCounter = 0; scenariosCounter < scenarios.getNumOfScenarios(); scenariosCounter++)
-		{
-			for (int historyCounter = 0; historyCounter < scenarios.getNumOfHistiryModes(); historyCounter++)
-			{
-				if (scenarios.isScenarioSelectedAt(scenariosCounter) && scenarios.isHistorySelectedAt(historyCounter)) {
-					runScenario(HISTORY_MODE.values()[historyCounter], SCENARIO_MODE.values()[scenariosCounter], progressBarInterval * (scenariosCounter + 1));
-				}
-			}
+		runProgressBar();
+		
+		if (scenarios.isMultithreadingEnabled())
+			runAnalyzerOnMultiThreadMode();
+		else
+			runAnalyzerOnNormalMode();
+		
+		try {
+			exeSrvc.shutdown();
+			exeSrvc.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
 		}
-
+		
 		DatabaseAnalyzer dbAnalyzer = new DatabaseAnalyzer(taskOutput);
 		dbAnalyzer.analyze();
 		progressBar.setValue(COMPLETE);
+		calcAnalysisDuration(startTime);
+		
 		try {
-			FileWriter fstream = new FileWriter(Diviner.getLogFile());
-			BufferedWriter out = new BufferedWriter(fstream);
-			out.write(taskOutput.getText());
-			out.close();
+				FileWriter fstream = new FileWriter(Diviner.getLogFile());
+				BufferedWriter out = new BufferedWriter(fstream);
+				out.write(taskOutput.getText());
+				out.close();
 		}
 		catch (Exception e) {	/* no log file was selected */}
 	}
 
-	private void runScenario(HISTORY_MODE histMode, SCENARIO_MODE scenario, int progressBarInterval) {
-		advanceProgress(progressBarInterval);
+	public void runProgressBar()
+	{
+		exeSrvc.execute(new Runnable() {
+			@Override
+			public void run() {
+				advanceProgress(PROGRESS_INTERVAL);					
+			}
+		});	
+	}
+	
+	public void runAnalyzerOnMultiThreadMode()
+	{
+		if (scenarios.isScenarioSelectedAt(LFM))
+			runLoginFirstScenario();
+		
+		if (scenarios.isScenarioSelectedAt(NLM))
+			runNoLoginScenario();
+		
+		if (scenarios.isScenarioSelectedAt(LAM))
+			runLoginAfterScenario();
+	}
+	
+	public void runLoginFirstScenario()
+	{
+		taskOutput.append("> Executing LoginFirst Mode Process...\n\n");
+		exeSrvc.execute(new Runnable() {
+			@Override
+			public void run() {
+				for (int historyCounter = 0; historyCounter < scenarios.getNumOfHistiryModes(); historyCounter++) {
+					if (scenarios.isHistorySelectedAt(historyCounter))
+						runScenario(HISTORY_MODE.values()[historyCounter], SCENARIO_MODE.values()[LFM]);				
+				}						
+			}
+		});		
+	}
+	
+	public void runNoLoginScenario()
+	{
+		taskOutput.append("> Executing NoLogin Mode Process...\n\n");
+		exeSrvc.execute(new Runnable() {
+			@Override
+			public void run() {
+				for (int historyCounter = 0; historyCounter < scenarios.getNumOfHistiryModes(); historyCounter++) {
+					if (scenarios.isHistorySelectedAt(historyCounter))
+						runScenario(HISTORY_MODE.values()[historyCounter], SCENARIO_MODE.values()[NLM]);				
+				}						
+			}
+		});	
+	}
+	
+	public void runLoginAfterScenario()
+	{
+		taskOutput.append("> Executing LoginAfter Mode Process...\n\n");
+		exeSrvc.execute(new Runnable() {
+			@Override
+			public void run() {
+				for (int historyCounter = 0; historyCounter < scenarios.getNumOfHistiryModes(); historyCounter++) {
+					if (scenarios.isHistorySelectedAt(historyCounter))
+						runScenario(HISTORY_MODE.values()[historyCounter], SCENARIO_MODE.values()[LAM]);				
+				}						
+			}
+		});	
+	}
+	
+	public void runAnalyzerOnNormalMode()
+	{
+		exeSrvc.execute(new Runnable() {
+			@Override
+			public void run() {
+				for (int scenariosCounter = 0; scenariosCounter < scenarios.getNumOfScenarios(); scenariosCounter++)
+				{
+					for (int historyCounter = 0; historyCounter < scenarios.getNumOfHistiryModes(); historyCounter++)
+					{
+						if (scenarios.isScenarioSelectedAt(scenariosCounter) && scenarios.isHistorySelectedAt(historyCounter)) {
+							runScenario(HISTORY_MODE.values()[historyCounter], SCENARIO_MODE.values()[scenariosCounter]);
+						}
+					}
+				}					
+			}
+		});	
+	}
+	
+	public void runScenario(HISTORY_MODE histMode, SCENARIO_MODE scenario) {
 		GenericAnalyzer analyzer = new Analyzer(histMode, scenario, taskOutput, scenarios.isVerifyMode()); 
-
-
+		
 		//Handle the token mode
 		if (Plugins.isAppendMode()) {
 			analyzer.analyze(true);
@@ -237,6 +365,7 @@ public class AnalyzeController extends JPanel implements ActionListener, Propert
 	{
 		return showResultsButton;
 	}
+	
 	//Increase progress bar value in a different thread
 	private class ProgressValue extends Thread
 	{
@@ -253,7 +382,7 @@ public class AnalyzeController extends JPanel implements ActionListener, Propert
 			int nextValue = progressBar.getValue();
 			while (progressBar.getValue() < interval)//Don't reach 100% - only when doAnalyze finished value is set to 100
 			{
-				nextValue = progressBar.getValue() + random.nextInt(2);
+				nextValue = progressBar.getValue() + (random.nextInt(RAND_HIGH_VAL-RAND_LOW_VAL)+RAND_LOW_VAL);
 				if (nextValue < COMPLETE)
 				{
 					progressBar.setValue(nextValue);

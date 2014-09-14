@@ -2,7 +2,6 @@ package com.hacktics.diviner.analyze;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
@@ -16,7 +15,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.parosproxy.paros.db.RecordHistory;
 import org.parosproxy.paros.model.HistoryReference;
 import org.parosproxy.paros.network.HtmlParameter;
-import org.parosproxy.paros.network.HttpBody;
 import org.parosproxy.paros.network.HttpMessage;
 import org.parosproxy.paros.network.HttpRequestHeader;
 import org.zaproxy.zap.network.HttpRequestBody;
@@ -27,7 +25,6 @@ import com.hacktics.diviner.database.DivinerTableHistory;
 import com.hacktics.diviner.diffutil.Response_Manager;
 import com.hacktics.diviner.diffutil.UnRelevantTag;
 import com.hacktics.diviner.gui.scanwizard.DiffCheckBox;
-import com.hacktics.diviner.gui.scanwizard.ExceptionsConfigDialog;
 import com.hacktics.diviner.gui.scanwizard.ScanWizard;
 import com.hacktics.diviner.tokens.TokenGenerator;
 import com.hacktics.diviner.zapDB.ZapHistoryDB;
@@ -187,7 +184,8 @@ public class AnalyzerUtils {
 	{
 		ArrayList<DivinerRecordResult> results = null;
 		try{
-			results = ZapHistoryDB.getAllDistinctResults();
+			results = ZapHistoryDB.getAllResults();
+			//results = ZapHistoryDB.getAllDistinctResults();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
